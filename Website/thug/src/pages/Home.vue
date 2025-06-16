@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="pa-8">
+  <v-container fluid class="pa-8 full-height-container">
     <v-card
       class="mx-auto book-card"
       max-width="1200"
@@ -174,12 +174,20 @@ export default {
 </script>
 
 <style scoped>
+.full-height-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+
 .book-card {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .book-cover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(58, 58, 58, 0.1);
   transition: transform 0.3s ease;
 }
 
