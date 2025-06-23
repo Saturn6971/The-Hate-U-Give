@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hate U Give - Buchinterface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    
+</div>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #af7575 50%, #ff1515 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            position: relative;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-book-cover {
+            width: 380px;
+            height: 520px;
+            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+            border-radius: 16px;
+            box-shadow: 
+                0 30px 70px rgba(0,0,0,0.4),
+                0 10px 30px rgba(0,0,0,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+            position: relative;
+            transform: perspective(1000px) rotateY(-12deg) rotateX(4deg);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 35px 30px;
+            text-align: center;
+            animation: bookFloatIn 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards, 
+                       bookFloat 6s ease-in-out 2s infinite;
+            opacity: 0;
+        }
+
+        @keyframes bookFloatIn {
+            0% {
+                opacity: 0;
+                transform: perspective(1000px) rotateY(-35deg) rotateX(15deg) translateY(120px) scale(0.7);
+            }
+            100% {
+                opacity: 1;
+                transform: perspective(1000px) rotateY(-12deg) rotateX(4deg) translateY(0) scale(1);
+            }
+        }
+
+        @keyframes bookFloat {
+            0%, 100% {
+                transform: perspective(1000px) rotateY(-12deg) rotateX(4deg) translateY(0) scale(1);
+            }
+            25% {
+                transform: perspective(1000px) rotateY(-8deg) rotateX(2deg) translateY(-20px) scale(1.02);
+            }
+            50% {
+                transform: perspective(1000px) rotateY(-16deg) rotateX(6deg) translateY(-12px) scale(1.01);
+            }
+            75% {
+                transform: perspective(1000px) rotateY(-10deg) rotateX(3deg) translateY(-25px) scale(1.03);
+            }
+        }
+
+        .hero-section.scrolled {
+            opacity: 0;
+            transform: translateY(-150px) scale(0.7);
+            pointer-events: none;
+        }
+
+        .hero-book-cover:hover {
+            transform: perspective(1000px) rotateY(-6deg) rotateX(1deg) translateZ(40px) scale(1.08);
+            box-shadow: 
+                0 40px 90px rgba(0,0,0,0.5),
+                0 15px 40px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            animation: fadeInUp 2s 1.5s both, bounce 3s 3s infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-indicator:hover {
+            color: rgba(255,255,255,1);
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .scroll-text {
+            font-size: 18px;
+            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+            font-weight: 300;
+        }
+
+        .scroll-arrow {
+            font-size: 28px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-12px); }
+            60% { transform: translateY(-6px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Main Interface Section */
+        .main-section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 40px;
+            position: relative;
+        }
+
+        .book-interface {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            padding: 50px;
+            width: 95vw;
+            max-width: 1200px;
+            height: 75vh;
+            max-height: 700px;
+            box-shadow: 
+                0 35px 70px rgba(0,0,0,0.25),
+                0 15px 35px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 50px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateY(100px) scale(0.85);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .book-interface.revealed {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .book-cover-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+        }
+
+        .book-interface.revealed .book-cover-section {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .book-cover {
+            width: 320px;
+            height: 460px;
+            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+            border-radius: 16px;
+            box-shadow: 
+                0 20px 45px rgba(0,0,0,0.2),
+                0 8px 25px rgba(0,0,0,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+            position: relative;
+            transform: perspective(1000px) rotateY(-18deg) rotateX(6deg);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 30px 25px;
+            text-align: center;
+        }
+
+        .book-cover:hover {
+            transform: perspective(1000px) rotateY(-12deg) rotateX(3deg) translateZ(25px);
+            box-shadow: 
+                0 30px 60px rgba(0,0,0,0.3),
+                0 12px 30px rgba(0,0,0,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+
+        .content-section {
+            flex: 1.3;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+        }
+
+        .book-interface.revealed .content-section {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .audio-player {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 28px;
+            padding: 25px 35px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 
+                0 12px 30px rgba(0,0,0,0.12),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s;
+            height: 120px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .book-interface.revealed .audio-player {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .audio-player:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 18px 40px rgba(0,0,0,0.18),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+
+        .content-placeholder {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 50px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            box-shadow: 
+                0 12px 30px rgba(0,0,0,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.9s;
+            border: 1px solid rgba(0,0,0,0.05);
+            
+        }
+
+        .book-interface.revealed .content-placeholder {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-placeholder:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 45px rgba(0,0,0,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+
+        .content-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: shimmer 3s infinite 2s;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Book Elements */
+        .author-name {
+            font-size: 20px;
+            color: #B91C1C;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 35px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .character-illustration {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 20px 0;
+        }
+
+       
+
+  
+
+    
+        .book-title {
+            font-size: 36px;
+            font-weight: 900;
+            color: #000000;
+            line-height: 0.9;
+            margin: 25px 0 40px 0;
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+          
+         
+        }
+
+        .hero-book-cover .book-title {
+            font-size: 42px;
+            margin: 30px 0 50px 0;
+        }
+
+        .title-icons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .fist-icon, .coffee-icon {
+            font-size: 28px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .legs-illustration {
+            position: relative;
+            width: 100px;
+            height: 80px;
+            margin: 20px 0;
+        }
+
+      
+
+      
+
+       
+
+       
+
+        .shoe-left {
+            left: 12px;
+        }
+
+        .shoe-right {
+            right: 12px;
+        }
+
+        .shoe::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 8px;
+            width: 25px;
+            height: 10px;
+            background: #fff;
+            border-radius: 12px;
+        }
+
+        .award-badge {
+            position: absolute;
+            bottom: 70px;
+            left: 25px;
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(218, 165, 32, 0.4);
+            line-height: 1.2;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .quote-text {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            right: 25px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            font-style: italic;
+            line-height: 1.4;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .publisher-logo {
+            position: absolute;
+            bottom: 12px;
+            right: 20px;
+            background: #B91C1C;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #db3434 0%, #b92929 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(41, 128, 185, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-button:hover {
+            transform: scale(1.15);
+            box-shadow: 0 16px 40px rgba(41, 128, 185, 0.4);
+        }
+
+        .play-button:active {
+            transform: scale(1.05);
+        }
+
+        .waveform {
+            flex: 1;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            padding: 0 15px;
+        }
+
+        .frequency-bar {
+            width: 4px;
+            background: linear-gradient(180deg, #db3434 0%, #b92929 100%);
+            border-radius: 3px;
+            animation: frequency 1s ease-in-out infinite;
+            box-shadow: 0 2px 8px rgba(219, 52, 52, 0.3);
+        }
+
+        .frequency-bar:nth-child(1) { height: 25px; animation-delay: 0s; }
+        .frequency-bar:nth-child(2) { height: 40px; animation-delay: 0.1s; }
+        .frequency-bar:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+        .frequency-bar:nth-child(4) { height: 35px; animation-delay: 0.3s; }
+        .frequency-bar:nth-child(5) { height: 30px; animation-delay: 0.4s; }
+        .frequency-bar:nth-child(6) { height: 45px; animation-delay: 0.5s; }
+        .frequency-bar:nth-child(7) { height: 22px; animation-delay: 0.6s; }
+        .frequency-bar:nth-child(8) { height: 38px; animation-delay: 0.7s; }
+        .frequency-bar:nth-child(9) { height: 32px; animation-delay: 0.8s; }
+        .frequency-bar:nth-child(10) { height: 28px; animation-delay: 0.9s; }
+        .frequency-bar:nth-child(11) { height: 42px; animation-delay: 1s; }
+        .frequency-bar:nth-child(12) { height: 24px; animation-delay: 1.1s; }
+        .frequency-bar:nth-child(13) { height: 36px; animation-delay: 1.2s; }
+        .frequency-bar:nth-child(14) { height: 29px; animation-delay: 1.3s; }
+        .frequency-bar:nth-child(15) { height: 44px; animation-delay: 1.4s; }
+        .frequency-bar:nth-child(16) { height: 26px; animation-delay: 1.5s; }
+        .frequency-bar:nth-child(17) { height: 39px; animation-delay: 1.6s; }
+        .frequency-bar:nth-child(18) { height: 31px; animation-delay: 1.7s; }
+        .frequency-bar:nth-child(19) { height: 37px; animation-delay: 1.8s; }
+        .frequency-bar:nth-child(20) { height: 23px; animation-delay: 1.9s; }
+
+        @keyframes frequency {
+            0%, 100% { 
+                transform: scaleY(0.4);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        .placeholder-title {
+            font-size: 32px;
+            color: #495057;
+            font-weight: 600;
+            letter-spacing: 2px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .placeholder-subtitle {
+            font-size: 18px;
+            color: #6c757d;
+            font-weight: 400;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+
+        .decorative-dots {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #adb5bd;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.4s; }
+        .dot:nth-child(3) { animation-delay: 0.8s; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        .book-spine-accent {
+            position: absolute;
+            left: -12px;
+            top: 0;
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(180deg, #B91C1C 0%, #991B1B 100%);
+            border-radius: 6px;
+            box-shadow: 0 0 20px rgba(185, 28, 28, 0.4);
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #B91C1C, #db3434);
+            z-index: 1000;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(185, 28, 28, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .book-interface {
+                padding: 35px;
+                gap: 35px;
+            }
+            
+            .hero-book-cover {
+                width: 340px;
+                height: 480px;
+            }
+            
+            .book-cover {
+                width: 280px;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-book-cover {
+                width: 300px;
+                height: 420px;
+                padding: 25px;
+            }
+
+            .book-interface {
+                flex-direction: column;
+                height: auto;
+                gap: 30px;
+                padding: 30px;
+                margin: 20px;
+            }
+            
+            .book-cover {
+                width: 240px;
+                height: 340px;
+                transform: none;
+            }
+            
+            .book-cover:hover {
+                transform: scale(1.05);
+            }
+            
+            .book-title {
+                font-size: 28px;
+            }
+            
+            .hero-book-cover .book-title {
+                font-size: 32px;
+            }
+            
+            .content-section {
+                gap: 20px;
+            }
+
+            .scroll-text {
+                font-size: 16px;
+            }
+            
+            .placeholder-title {
+                font-size: 24px;
+            }
+            
+            .placeholder-subtitle {
+                font-size: 16px;
+            }
+            
+            .main-section {
+                padding: 40px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-book-cover {
+                width: 260px;
+                height: 360px;
+                padding: 20px;
+            }
+            
+            .book-interface {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .book-cover {
+                width: 200px;
+                height: 280px;
+            }
+            
+            .book-title {
+                font-size: 24px;
+            }
+            
+            .hero-book-cover .book-title {
+                font-size: 28px;
+            }
+        }
+
+        .control-button {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%);
+            color: #db3434;
+            border: none;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            margin: 0 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.08);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .control-button:hover {
+            background: linear-gradient(135deg, #bdbdbd 0%, #e0e0e0 100%);
+            transform: scale(1.12);
+        }
+        .audio-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            min-width: 120px;
+        }
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 14px;
+            color: #495057;
+            font-family: 'Inter', sans-serif;
+        }
+        .progress-container {
+            width: 120px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            margin-top: 2px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border-radius: 4px;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #db3434, #B91C1C);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.2s;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .lyrics-display {
+            width: 100%;
+            max-height: 220px;
+            overflow-y: auto;
+            background: rgba(255,255,255,0.7);
+            border-radius: 12px;
+            padding: 18px 24px;
+            margin: 0 auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .lyrics-text {
+            font-size: 18px;
+            color: #222;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+        .lyrics-line {
+            margin: 0;
+            padding: 2px 0;
+            transition: color 0.03s, background 0.03s, font-size 0.12s, box-shadow 0.12s;
+        }
+        .lyrics-line.active {
+            color: #fff;
+            background: linear-gradient(90deg, #672a2a 0%, #B91C1C 100%);
+            border-radius: 6px;
+            padding: 2px 12px;
+            font-weight: 800;
+            font-size: 22px;
+            box-shadow: 0 2px 16px 0 rgba(52,152,219,0.18), 0 0px 0px 2px #B91C1C33;
+            animation: lyricsPop 0.22s cubic-bezier(0.4,0,0.2,1);
+        }
+        @keyframes lyricsPop {
+            0% { transform: scale(1) translateY(0); box-shadow: none; }
+            40% { transform: scale(1.13) translateY(-2px); box-shadow: 0 4px 24px 0 rgba(52,152,219,0.22); }
+            100% { transform: scale(1) translateY(0); box-shadow: 0 2px 16px 0 rgba(52,152,219,0.18), 0 0px 0px 2px #B91C1C33; }
+        }
+
+        .next-btn {
+        display: inline-block;
+        background: linear-gradient(90deg, #df6b6be7 0%, #B91C1C 100%);
+        color: #fff;
+         font-size: 20px;         font-family: 'Inter', sans-serif;
+         font-weight: 700;
+       padding: 12px 36px;
+        border-radius: 32px;
+          text-decoration: none;
+           margin-top: 18px;
+           box-shadow: 0 4px 16px rgba(52,152,219,0.10);
+           transition: background 0.18s, transform 0.18s;
+       }
+       .next-btn:hover {
+           background: linear-gradient(90deg, #B91C1C 0%, #df6b6be7 100%);
+           transform: scale(1.06);
+      }
+        .next-btn:hover {
+            background: linear-gradient(90deg, #B91C1C 0%, #df6b6be7 100%);
+            transform: scale(1.06);
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-book-cover">
+            <div class="book-spine-accent"></div>
+            
+            <div class="author-name">ANGIE THOMAS</div>
+            
+            <div class="character-illustration">
+                <div class="character-hair"></div>
+                <div class="character-headband"></div>
+                <div class="character-face"></div>
+            </div>
+            
+            <div class="title-icons">
+                <span class="fist-icon">✊</span>
+                <span class="coffee-icon">☕</span>
+            </div>
+            
+            <div class="book-title">
+                THE<br>
+                HATE<br>
+                U<br>
+                GIVE
+            </div>
+            
+            <div class="legs-illustration">
+                <div class="shorts"></div>
+                <div class="leg leg-left"></div>
+                <div class="leg leg-right"></div>
+                <div class="shoe shoe-left"></div>
+                <div class="shoe shoe-right"></div>
+            </div>
+            
+            <div class="award-badge">
+                Deutscher<br>
+                Jugendliteratur<br>
+                Preis
+            </div>
+            
+            <div class="quote-text">
+                »Umwerfend und brillant, ein Klassiker!«<br>
+                Bestsellerautor John Green
+            </div>
+            
+            <div class="publisher-logo">cbj</div>
+        </div>
+        
+        <div class="scroll-indicator" onclick="scrollToMain()">
+            <div class="scroll-text">Scroll für mehr</div>
+            <div class="scroll-arrow">↓</div>
+        </div>
+    </div>
+
+    <!-- Main Interface Section -->
+    <div class="main-section">
+        <div class="book-interface" id="mainInterface">
+            <div class="book-cover-section">
+                <div class="book-cover">
+                    <div class="book-spine-accent"></div>
+                    
+                    <div class="author-name">ANGIE THOMAS</div>
+                    
+                    <div class="character-illustration">
+                        <div class="character-hair"></div>
+                        <div class="character-headband"></div>
+                        <div class="character-face"></div>
+                    </div>
+                    
+                    <div class="title-icons">
+                        <span class="fist-icon">✊</span>
+                        <span class="coffee-icon">☕</span>
+                    </div>
+                    
+                    <div class="book-title">
+                        THE<br>
+                        HATE<br>
+                        U<br>
+                        GIVE
+                    </div>
+                    
+                    <div class="legs-illustration">
+                        <div class="shorts"></div>
+                        <div class="leg leg-left"></div>
+                        <div class="leg leg-right"></div>
+                        <div class="shoe shoe-left"></div>
+                        <div class="shoe shoe-right"></div>
+                    </div>
+                    
+                    <div class="award-badge">
+                        Deutscher<br>
+                        Jugendliteratur<br>
+                        Preis
+                    </div>
+                    
+                    <div class="quote-text">
+                        »Umwerfend und brillant, ein Klassiker!«<br>
+                        Bestsellerautor John Green
+                    </div>
+
+                    <div class="publisher-logo">cbj</div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="audio-player">
+                    <button class="control-button" onclick="skipBackward()">
+                        <span>⏮</span>
+                    </button>
+                    <button class="play-button" onclick="togglePlay()">
+                        <span id="playIcon">▶</span>
+                    </button>
+                    <button class="control-button" onclick="skipForward()">
+                        <span>⏭</span>
+                    </button>
+                    <div class="audio-controls">
+                        <div class="time-display">
+                            <span id="currentTime">0:00</span>
+                            <span id="duration">0:00</span>
+                        </div>
+                        <div class="progress-container" onclick="setProgress(event)">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="waveform">
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                        <div class="frequency-bar"></div>
+                    </div>
+                </div>
+                <audio id="audioPlayer" preload="metadata">
+                    <source src="Zensur.mp3" type="audio/mpeg">
+                    Ihr Browser unterstützt das Audio-Element nicht.
+                </audio>
+                
+                <div class="content-placeholder" id="lyricsContainer">
+                    <div class="lyrics-display">
+                        <div class="lyrics-display">
+                            <div class="lyrics-text" id="lyricsText">
+                              <p class="lyrics-line" data-time="0">In diesem Beitrag geht’s um ein Thema, das uns alle betrifft – auch wenn wir es nicht sofort merken: Zensur.</p>
+                              <p class="lyrics-line" data-time="5">Ich erkläre dir, was das überhaupt ist, warum manche Bücher nicht mehr gelesen werden dürfen – und warum das ein großes Problem sein kann.</p>
+                              <p class="lyrics-line" data-time="11">Also, was ist Zensur eigentlich?</p>
+                              <p class="lyrics-line" data-time="16">Zensur bedeutet, dass bestimmte Inhalte – zum Beispiel Texte, Filme, Musik oder eben Bücher – bewusst unterdrückt oder sogar ganz verboten werden.</p>
+                              <p class="lyrics-line" data-time="21">Das passiert, wenn jemand entscheidet: „Das hier ist gefährlich“ oder „Das will ich nicht, dass andere es lesen.“</p>
+                              <p class="lyrics-line" data-time="26">Diese Entscheidung treffen oft Regierungen, Schulen oder auch religiöse Gruppen.</p>
+                              <p class="lyrics-line" data-time="32">Die Gründe dafür sind unterschiedlich: Manchmal enthalten Bücher Gewalt oder „schlimme Sprache“</p>
+                              <p class="lyrics-line" data-time="37">manchmal geht’s um Liebe zwischen zwei Jungs oder zwei Mädchen, um Rassismus oder um Drogen –</p>
+                              <p class="lyrics-line" data-time="42">also um Themen, die manche Leute unangenehm finden oder nicht in der Öffentlichkeit sehen wollen.</p>
+                              <p class="lyrics-line" data-time="48">Aber ist es richtig, Bücher zu verbieten, nur weil sie schwierig oder ehrlich sind?</p>
+                              <p class="lyrics-line" data-time="53">Ein Blick in die Geschichte zeigt: Zensur hat es schon immer gegeben.</p>
+                              <p class="lyrics-line" data-time="58">Besonders bekannt ist die Bücherverbrennung im Jahr 1933 in Deutschland.</p>
+                              <p class="lyrics-line" data-time="64">Damals haben die Nationalsozialisten tausende Bücher von jüdischen Autor:innen verbrannt.</p>
+                              <p class="lyrics-line" data-time="69">Sie wollten verhindern, dass andere Meinungen gelesen werden. Dass Menschen selbst nachdenken.</p>
+                              <p class="lyrics-line" data-time="74">Aber auch heute – im Jahr 2025 – gibt es Zensur.</p>
+                              <p class="lyrics-line" data-time="80">In Ländern wie China oder Russland dürfen Medien nur berichten, was die Regierung erlaubt.</p>
+                              <p class="lyrics-line" data-time="85">Und selbst in Ländern, die eigentlich für Freiheit stehen – wie den USA –</p>
+                              <p class="lyrics-line" data-time="90">werden jedes Jahr hunderte Bücher aus Schulbibliotheken entfernt oder ganz verboten.</p>
+                              <p class="lyrics-line" data-time="95">Eines dieser Bücher ist The Hate U Give.</p>
+                              <p class="lyrics-line" data-time="101">Es wurde in mehreren US-Bundesstaaten zensiert – zum Beispiel in Texas, Missouri und South Carolina.</p>
+                              <p class="lyrics-line" data-time="106">Warum? Weil es über Polizeigewalt, Rassismus und Protest spricht.</p>
+                              <p class="lyrics-line" data-time="111">Weil die Hauptfigur ein schwarzes Mädchen ist, das erlebt, wie ihr Freund erschossen wird.</p>
+                              <p class="lyrics-line" data-time="117">Und weil das Buch ehrlich ist. Vielleicht zu ehrlich für manche.</p>
+                              <p class="lyrics-line" data-time="122">Aber gerade deshalb ist es wichtig.</p>
+                              <p class="lyrics-line" data-time="127">Denn wenn Bücher wie The Hate U Give verschwinden, verschwinden auch die Geschichten von echten Menschen.</p>
+                              <p class="lyrics-line" data-time="133">Menschen, die Rassismus erleben, Ungerechtigkeit, Angst.</p>
+                              <p class="lyrics-line" data-time="138">Wenn wir diese Bücher nicht lesen dürfen, lernen wir weniger über andere – und über uns selbst.</p>
+                              <p class="lyrics-line" data-time="143">Bücher machen unsere Welt größer. Sie helfen uns, andere Perspektiven zu verstehen.</p>
+                              <p class="lyrics-line" data-time="149">Und wenn man sie zensiert, nimmt man jungen Menschen die Möglichkeit, sich eine eigene Meinung zu bilden.</p>
+                              <p class="lyrics-line" data-time="154">Zensur klingt vielleicht nach einem fernen Thema.</p>
+                              <p class="lyrics-line" data-time="159">Aber in Wahrheit geht es dabei um etwas sehr Nahes: Freiheit.</p>
+                              <p class="lyrics-line" data-time="165">Die Freiheit zu lesen, zu lernen und zu verstehen.</p>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 32px;">
+                <a href="http://127.0.0.1:5500/index.html" class="next-btn">&larr; Zurück</a>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = false;
+        const audio = document.getElementById('audioPlayer');
+        const playIcon = document.getElementById('playIcon');
+        const frequencyBars = document.querySelectorAll('.frequency-bar');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const progressFill = document.getElementById('progressFill');
+
+        function scrollToMain() {
+            document.getElementById('mainInterface').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                isPlaying = true;
+                playIcon.textContent = '⏸';
+                frequencyBars.forEach(bar => bar.style.animationPlayState = 'running');
+            } else {
+                audio.pause();
+                isPlaying = false;
+                playIcon.textContent = '▶';
+                frequencyBars.forEach(bar => bar.style.animationPlayState = 'paused');
+            }
+        }
+
+        function skipBackward() {
+            audio.currentTime = Math.max(0, audio.currentTime - 10);
+        }
+        function skipForward() {
+            audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+        }
+        function setProgress(e) {
+            const container = e.currentTarget;
+            const rect = container.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        }
+        function formatTime(time) {
+            const min = Math.floor(time / 60);
+            const sec = Math.floor(time % 60).toString().padStart(2, '0');
+            return `${min}:${sec}`;
+        }
+        audio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audio.duration);
+        });
+        audio.addEventListener('timeupdate', () => {
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+            progressFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+        });
+        audio.addEventListener('ended', () => {
+            isPlaying = false;
+            playIcon.textContent = '▶';
+            frequencyBars.forEach(bar => bar.style.animationPlayState = 'paused');
+        });
+
+        function setupObservers() {
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+
+            observer.observe(document.getElementById('mainInterface'));
+
+            const heroObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const heroSection = document.querySelector('.hero-section');
+                    if (entry.isIntersecting) {
+                        heroSection.classList.add('scrolled');
+                    } else {
+                        heroSection.classList.remove('scrolled');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            heroObserver.observe(document.getElementById('mainInterface'));
+        }
+
+        function updateScrollProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            document.querySelector('.scroll-progress').style.width = scrollPercent + '%';
+        }
+
+        function handleParallax() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-section');
+            const speed = scrolled * 0.3;
+            
+            if (parallax) {
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setupObservers();
+            window.addEventListener('scroll', updateScrollProgress);
+            window.addEventListener('scroll', handleParallax);
+            
+            // Initialize frequency bars as paused
+            const frequencyBars = document.querySelectorAll('.frequency-bar');
+            frequencyBars.forEach(bar => {
+                bar.style.animationPlayState = 'paused';
+            });
+        });
+
+        // Cleanup event listeners
+        window.addEventListener('beforeunload', function() {
+            window.removeEventListener('scroll', updateScrollProgress);
+            window.removeEventListener('scroll', handleParallax);
+        });
+
+        function syncLyrics() {
+            const audio = document.getElementById('audioPlayer');
+            const lines = document.querySelectorAll('.lyrics-line');
+            let current = -1;
+            // Dynamisch Endzeiten berechnen
+            const lineTimings = Array.from(lines).map((line, i) => {
+                const start = parseFloat(line.getAttribute('data-time'));
+                const text = line.textContent.trim();
+                const minDuration = text.length < 60 ? 2 : 4;
+                let end;
+                if (i < lines.length - 1) {
+                    const nextStart = parseFloat(lines[i+1].getAttribute('data-time'));
+                    end = Math.max(start + minDuration, nextStart);
+                } else {
+                    end = start + minDuration;
+                }
+                return {start, end};
+            });
+            function updateLyrics() {
+                const time = audio.currentTime;
+                let newCurrent = -1;
+                for (let i = 0; i < lineTimings.length; i++) {
+                    if (time >= lineTimings[i].start && time < lineTimings[i].end) {
+                        newCurrent = i;
+                        break;
+                    }
+                }
+                if (newCurrent !== current) {
+                    if (current !== -1) lines[current].classList.remove('active');
+                    if (newCurrent !== -1) {
+                        lines[newCurrent].classList.add('active');
+                        // Scroll to active line (sofort)
+                        lines[newCurrent].scrollIntoView({behavior: 'auto', block: 'center'});
+                    }
+                    current = newCurrent;
+                }
+            }
+            audio.addEventListener('timeupdate', updateLyrics);
+        }
+        document.addEventListener('DOMContentLoaded', syncLyrics);
+    </script>
+</body>
+</html>
